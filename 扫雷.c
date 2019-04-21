@@ -88,56 +88,97 @@ void printmap() {
 		printf("\n");
 	}
 }
-void dig() {
-	while (1) {
-		printf("输入你想要挖掘的坐标（行，列），用 ','分隔:");
-		int c;
-		while((c = getchar()) != '\n' && c != EOF);
-		scanf("%d,%d", &row, &col);
-		if (row >= 0 && row <= 9 || col >= 0 && col <= 9) {
-			if (maps[row][col] == 'X') {
-				maps[row][col] = mines_maps[row][col]+'0';
+void dig(int row, int col) {
+	if (row < 0 || row>9 || col < 0 || col>9) {
+		return 0;
+	}
+		maps[row][col] = mines_maps[row][col]+'0';
 				if (mines_maps[row][col] == 0) {
 					if (col > 0 && col < 9){
+
+						if ((mines_maps[row - 1][col - 1] == 0 )&& (maps[row - 1][col - 1] == 'X')) {
+							dig(row - 1, col - 1);
+						}
 						maps[row - 1][col - 1] = mines_maps[row - 1][col - 1] + '0';
-						maps[row - 1][col] = mines_maps[row - 1][col] + '0';
-						maps[row - 1][col + 1] = mines_maps[row - 1][col + 1] + '0';
-						maps[row][col - 1] = mines_maps[row][col - 1] + '0';
-						maps[row][col + 1] = mines_maps[row][col + 1] + '0';
-						maps[row + 1][col - 1] = mines_maps[row + 1][col - 1] + '0';
-						maps[row + 1][col] = mines_maps[row + 1][col] + '0';
-						maps[row + 1][col + 1] = mines_maps[row + 1][col + 1] + '0';
+						
+						if ((mines_maps[row - 1][col] == 0) && (maps[row - 1][col] == 'X')) {
+							dig(row - 1, col);
+						}maps[row - 1][col] = mines_maps[row - 1][col] + '0';
+						
+						if ((mines_maps[row - 1][col + 1]==0) && (maps[row - 1][col + 1] == 'X')){
+							dig(row - 1, col + 1);
+						}maps[row - 1][col + 1] = mines_maps[row - 1][col + 1] + '0';
+						
+						if ((mines_maps[row][col - 1] == 0) && (maps[row][col - 1] == 'X')){
+							dig(row, col - 1);
+						}maps[row][col - 1] = mines_maps[row][col - 1] + '0';
+						
+						if ((mines_maps[row][col + 1]==0) && (maps[row][col - 1] == 'X')){
+							dig(row, col + 1);
+						}maps[row][col + 1] = mines_maps[row][col + 1] + '0';
+						
+						if ((mines_maps[row + 1][col - 1]==0) && (maps[row + 1][col - 1] == 'X')){
+							dig(row + 1, col - 1);
+						}maps[row + 1][col - 1] = mines_maps[row + 1][col - 1] + '0';
+						
+						if ((mines_maps[row + 1][col] == 0) && (maps[row + 1][col] == 'X')) {
+							dig(row + 1, col);
+						}maps[row + 1][col] = mines_maps[row + 1][col] + '0';
+						
+						if ((mines_maps[row + 1][col + 1] == 0) && (maps[row + 1][col + 1] == 'X')) {
+							dig(row + 1, col + 1);
+						}maps[row + 1][col + 1] = mines_maps[row + 1][col + 1] + '0';
 					}
 					if (col == 0) {
-						maps[row - 1][col] = mines_maps[row - 1][col] + '0';
-						maps[row - 1][col + 1] = mines_maps[row - 1][col + 1] + '0';
-						maps[row][col + 1] = mines_maps[row][col + 1] + '0';
-						maps[row + 1][col] = mines_maps[row + 1][col] + '0';
-						maps[row + 1][col + 1] = mines_maps[row + 1][col + 1] + '0';
+						
+						if (mines_maps[row - 1][col] == 0 && maps[row - 1][col] == 'X') {
+							dig(row - 1, col);
+						}maps[row - 1][col] = mines_maps[row - 1][col] + '0';
+						
+						if (mines_maps[row - 1][col + 1]==0 && maps[row - 1][col + 1] == 'X'){
+							dig(row - 1, col + 1);
+						}maps[row - 1][col + 1] = mines_maps[row - 1][col + 1] + '0';
+						
+						if (mines_maps[row][col + 1]==0 && maps[row][col - 1] == 'X'){
+							dig(row, col + 1);
+						}maps[row][col + 1] = mines_maps[row][col + 1] + '0';
+						
+						if (mines_maps[row + 1][col] == 0 && maps[row - 1][col] == 'X') {
+							dig(row + 1, col);
+						}maps[row + 1][col] = mines_maps[row + 1][col] + '0';
+						
+						if (mines_maps[row + 1][col + 1] == 0 && maps[row + 1][col + 1] == 'X') {
+							dig(row + 1, col + 1);
+						}maps[row + 1][col + 1] = mines_maps[row + 1][col + 1] + '0';
 					}
 					if (col == 9) {
-						maps[row - 1][col - 1] = mines_maps[row - 1][col - 1] + '0';
-						maps[row - 1][col] = mines_maps[row - 1][col] + '0';
-						maps[row][col - 1] = mines_maps[row][col - 1] + '0';
-						maps[row + 1][col - 1] = mines_maps[row + 1][col - 1] + '0';
-						maps[row + 1][col] = mines_maps[row + 1][col] + '0';
+						
+						if (mines_maps[row - 1][col - 1]==0 && maps[row - 1][col - 1] == 'X'){
+							dig(row - 1, col - 1);
+						}maps[row - 1][col - 1] = mines_maps[row - 1][col - 1] + '0';
+						
+						if (mines_maps[row - 1][col] == 0 && maps[row - 1][col] == 'X') {
+							dig(row - 1, col);
+						}maps[row - 1][col] = mines_maps[row - 1][col] + '0';
+						
+						if (mines_maps[row][col - 1] == 0 && maps[row][col - 1] == 'X') {
+							dig(row, col - 1);
+						}maps[row][col - 1] = mines_maps[row][col - 1] + '0';
+						
+						if (mines_maps[row + 1][col - 1]==0 && maps[row + 1][col - 1] == 'X'){
+							dig(row + 1, col - 1);
+						}maps[row + 1][col - 1] = mines_maps[row + 1][col - 1] + '0';
+						
+						if (mines_maps[row + 1][col] == 0 && maps[row - 1][col] == 'X') {
+							dig(row + 1, col);
+						}maps[row + 1][col] = mines_maps[row + 1][col] + '0';
 					}
 				}
-			break;
-			}
-			else {
-				printf("你已经挖掘过了!\n");
-			}
-		}
-		else {
-			printf("非法坐标!\n");
-		}
-	}
 }
 int lose_check() {
 	if (mines_maps[row][col]>8){
 		printf("\n*********\n");
-		printf("**你输了!**\n");
+		printf("*你输了!*\n");
 		printf("*********\n\n");
 		for (row = 0; row < max_row; ++row) {
 			for (col = 0; col < max_col; ++col) {
@@ -156,13 +197,12 @@ int lose_check() {
 int WinCheck() {
 	for (row = 0; row < max_row; ++row) {
 		for (col = 0; col < max_col; ++col) {
-			if (mines_maps[row][col] < 9) {
-				if (maps[row][col]=='X'){
-					break;
-				}
+			if (mines_maps[row][col] < 9 && maps[row][col]=='X') {
+				goto jump;
 			}
 		}
 	}
+	jump:
 	if (row == 10 && col == 10) {
 		return 1;
 	}
@@ -171,22 +211,35 @@ int WinCheck() {
 }
 int game() {
 	inti();
+	printmap();
 	while (1) {
-		printmap();
-		dig();
+		printf("输入你想要挖掘的坐标（行，列），用 ','分隔:");
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF);
+		scanf("%d,%d", &row, &col);
+		if (row >= 0 && row <= 9 || col >= 0 && col <= 9) {
+			if (maps[row][col] == 'X') {
+				dig(row, col);
+			}
+			else {
+				printf("你已经挖过这里了！\n");
+			}
+		}
+		else {
+			printf("坐标非法！\n");
+		}
 		if (lose_check() == 0) {
 			return 0;
 		}
 		if (WinCheck() == 1) {
 			printf("\n********\n");
-			printf("**你赢了!*\n");
+			printf("*你赢了!*\n");
 			printf("********\n\n");
 			return 0;
 		}
+	printmap();
 	}
 }
-	
-
 int main(){
 	menu();
 	game();
